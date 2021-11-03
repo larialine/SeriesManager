@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Projeto SeriesManager</string>
+
+    <string-array name="genero">
+        <item>Ação</item>
+        <item>Aventura</item>
+        <item>Comédia</item>
+        <item>Drama</item>
+        <item>Romance</item>
+        <item>Terror</item>
+    </string-array>
+</resources>
