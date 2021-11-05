@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.SeriesRvAdapter
 import aula.pdm.projetoseriesmanager.controller.SerieController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainBinding
-import aula.pdm.projetoseriesmanager.model.Serie
+import aula.pdm.projetoseriesmanager.model.serie.Serie
+import aula.pdm.projetoseriesmanager.model.serie.onSerieClickListener
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(), onSerieClickListener {
@@ -28,12 +29,12 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
 
     private lateinit var serieActivityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var editarSerieActivityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var temporadaActivityResultLauncher: ActivityResultLauncher<Intent>
 
     // Data source
     private val seriesList: MutableList<Serie> by lazy{
         serieController.buscarSeries()
     }
-
 
     // Controller
     private val serieController: SerieController by lazy{
@@ -56,8 +57,8 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         setContentView(activityMainBinding.root)
 
         // Associando Adapter e LayoutManager ao RecycleView
-        activityMainBinding.serieRv.adapter = seriesAdapter
-        activityMainBinding.serieRv.layoutManager = seriesLayoutManager
+        activityMainBinding.lista.adapter = seriesAdapter
+        activityMainBinding.lista.layoutManager = seriesLayoutManager
 
         serieActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             resultado ->
@@ -88,6 +89,15 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
 
         activityMainBinding.adicionarHistoricoFab.setOnClickListener {
             serieActivityResultLauncher.launch(Intent(this, SerieActivity::class.java))
+        }
+
+        temporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            resultado ->
+            if(resultado.resultCode == RESULT_OK){
+                resultado.data?.getStringExtra(EXTRA_SERIE)?.let {
+                    serieActivityResultLauncher.launch((Intent(this, SerieActivity::class.java)))
+                }
+            }
         }
     }
 
@@ -124,6 +134,15 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
 
                 true
             }
+            R.id.visualizarDetalhesMi -> {
+                // Trocar tela para cadastro de temporadas
+                val serie = seriesList[posicao]
+                val exibirTelaTemporada = Intent(this, MainTemporadaActivity::class.java)
+                exibirTelaTemporada.putExtra(EXTRA_SERIE, serie)
+                exibirTelaTemporada.putExtra(EXTRA_POSICAO, posicao)
+                temporadaActivityResultLauncher.launch(exibirTelaTemporada)
+                true
+            }
             else ->{
                 false
             }
@@ -149,4 +168,5 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         }
         else -> false
     }
+
 }

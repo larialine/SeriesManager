@@ -5,30 +5,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/nomeSerieTv"
+        android:id="@+id/temporadasTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Série"
+        android:text="Temporadas"
         android:textSize="25sp"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/anoSerieTv"
+        android:id="@+id/nomeSerieTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Ano"
+        android:text="Nome Série"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/generoSerieTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temporadasTv" />
+
+    <TextView
+        android:id="@+id/numeroTemporadaTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Número"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/episodiosTv"
         app:layout_constraintTop_toBottomOf="@id/nomeSerieTv" />
 
     <TextView
-        android:id="@+id/generoSerieTv"
+        android:id="@+id/episodiosTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Gênero"
-        app:layout_constraintStart_toEndOf="@id/anoSerieTv"
+        android:text="Qntde Episódios"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/numeroTemporadaTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nomeSerieTv" />
 

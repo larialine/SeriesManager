@@ -1,4 +1,4 @@
-package aula.pdm.projetoseriesmanager.model
+package aula.pdm.projetoseriesmanager.model.serie
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

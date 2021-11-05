@@ -6,4 +6,7 @@
     <item
         android:id="@+id/removerMi"
         android:title="Remover" />
+    <item
+        android:id="@+id/visualizarDetalhesMi"
+        android:title="Visualizar Detalhes" />
 </menu>

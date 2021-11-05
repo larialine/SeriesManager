@@ -1,4 +1,4 @@
-package aula.pdm.projetoseriesmanager.model
+package aula.pdm.projetoseriesmanager.model.serie
 
 interface SerieDAO  {
     fun criarSerie(serie: Serie): Long

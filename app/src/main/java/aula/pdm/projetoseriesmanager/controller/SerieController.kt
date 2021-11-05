@@ -1,9 +1,9 @@
 package aula.pdm.projetoseriesmanager.controller
 
 import aula.pdm.projetoseriesmanager.MainActivity
-import aula.pdm.projetoseriesmanager.model.Serie
-import aula.pdm.projetoseriesmanager.model.SerieDAO
-import aula.pdm.projetoseriesmanager.model.SerieSqlite
+import aula.pdm.projetoseriesmanager.model.serie.Serie
+import aula.pdm.projetoseriesmanager.model.serie.SerieDAO
+import aula.pdm.projetoseriesmanager.model.serie.SerieSqlite
 
 class SerieController(mainActivity: MainActivity) {
 

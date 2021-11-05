@@ -5,8 +5,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import aula.pdm.projetoseriesmanager.R
 import aula.pdm.projetoseriesmanager.databinding.LayoutSerieBinding
-import aula.pdm.projetoseriesmanager.model.Serie
-import aula.pdm.projetoseriesmanager.onSerieClickListener
+import aula.pdm.projetoseriesmanager.model.serie.Serie
+import aula.pdm.projetoseriesmanager.model.serie.onSerieClickListener
 
 class SeriesRvAdapter(
     private val onSerieClickListener: onSerieClickListener,
@@ -16,8 +16,10 @@ class SeriesRvAdapter(
     //Posição que será recuperada pelo menu de contexto
     var posicao: Int = -1
 
+    //ViewHolder
     inner class SerieLayoutHolder(layoutSerieBinding: LayoutSerieBinding): RecyclerView.ViewHolder(layoutSerieBinding.root), View.OnCreateContextMenuListener{
         val nomeTv: TextView = layoutSerieBinding.nomeSerieTv
+        val anoTv: TextView = layoutSerieBinding.anoSerieTv
         val generoTv: TextView = layoutSerieBinding.generoSerieTv
         init{
             itemView.setOnCreateContextMenuListener(this)
@@ -49,6 +51,7 @@ class SeriesRvAdapter(
         // Atualizar os valores do viewHolder
         with(holder){
             nomeTv.text = serie.nome
+            anoTv.text = serie.ano.toString()
             generoTv.text = serie.genero
             itemView.setOnClickListener {
                 onSerieClickListener.onSerieClick(position)
