@@ -43,7 +43,7 @@ public class EpisodioActivity extends AppCompatActivity {
         );
 
         // Verificando se é uma edição ou consulta e preenchendo os campos
-        posicao = getIntent().getIntExtra(MainActivity.EXTRA_POSICAO, -1);
+        posicao = getIntent().getIntExtra(MainEpisodioActivity.EXTRA_POSICAO, -1);
         episodio = getIntent().getParcelableExtra(MainEpisodioActivity.EXTRA_EPISODIO);
         if(episodio != null){
             activityEpisodioBinding.numeroEpisodioEt.setText(String.valueOf(episodio.getNumero()));

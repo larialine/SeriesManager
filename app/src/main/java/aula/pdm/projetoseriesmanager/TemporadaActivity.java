@@ -42,7 +42,7 @@ public class TemporadaActivity extends AppCompatActivity {
         );
 
         // Verificando se é uma edição ou consulta e preenchendo os campos
-        posicao = getIntent().getIntExtra(MainActivity.EXTRA_POSICAO, -1);
+        posicao = getIntent().getIntExtra(MainTemporadaActivity.EXTRA_POSICAO, -1);
         temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_EPISODIO);
         if(temporada != null){
             activityTemporadaBinding.numeroTemporadaEt.setText(String.valueOf(temporada.getNumero()));

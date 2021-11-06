@@ -1,13 +1,13 @@
 package aula.pdm.projetoseriesmanager
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.SeriesRvAdapter
 import aula.pdm.projetoseriesmanager.controller.SerieController
@@ -16,7 +16,8 @@ import aula.pdm.projetoseriesmanager.model.serie.Serie
 import aula.pdm.projetoseriesmanager.model.serie.onSerieClickListener
 import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity(), onSerieClickListener {
+class MainActivity: AppCompatActivity(), onSerieClickListener {
+
     //conseguir passar parametros de uma tela para outra
     companion object Extras{
         const val EXTRA_SERIE = "EXTRA SERIE"
@@ -32,12 +33,12 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
     private lateinit var temporadaActivityResultLauncher: ActivityResultLauncher<Intent>
 
     // Data source
-    private val seriesList: MutableList<Serie> by lazy{
+    private val seriesList: MutableList<Serie> by lazy {
         serieController.buscarSeries()
     }
 
-    // Controller
-    private val serieController: SerieController by lazy{
+    //Controller
+    private val serieController: SerieController by lazy {
         SerieController(this)
     }
 
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
     }
 
     // LayoutManager
-    private val seriesLayoutManager: LinearLayoutManager by lazy{
+    private val livrosLayoutManager: LinearLayoutManager by lazy{
         LinearLayoutManager(this)
     }
 
@@ -58,24 +59,25 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
 
         // Associando Adapter e LayoutManager ao RecycleView
         activityMainBinding.lista.adapter = seriesAdapter
-        activityMainBinding.lista.layoutManager = seriesLayoutManager
+        activityMainBinding.lista.layoutManager = livrosLayoutManager
 
         serieActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            resultado ->
-            if(resultado.resultCode == RESULT_OK){
-                // recebendo serie
+                resultado ->
+            if (resultado.resultCode == AppCompatActivity.RESULT_OK){
+                //recebendo a série
                 resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply {
                     serieController.inserirSerie(this)
-                    // adicionando a série no seriesList e no adapter
+                    //adicionando a série no seriesList e no Adapter
                     seriesList.add(this)
                     seriesAdapter.notifyDataSetChanged()
+
                 }
             }
         }
 
         editarSerieActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            resultado ->
-            if(resultado.resultCode == RESULT_OK){
+                resultado ->
+            if (resultado.resultCode == AppCompatActivity.RESULT_OK){
                 val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
                 resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply {
                     if(posicao != null && posicao != -1){
@@ -87,12 +89,12 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
             }
         }
 
-        activityMainBinding.adicionarHistoricoFab.setOnClickListener {
+        activityMainBinding.adicionarHistoricoFab.setOnClickListener{
             serieActivityResultLauncher.launch(Intent(this, SerieActivity::class.java))
         }
 
         temporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            resultado ->
+                resultado ->
             if(resultado.resultCode == RESULT_OK){
                 val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
                 resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply{
@@ -102,14 +104,14 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
                 }
             }
         }
+
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-
         val posicao = seriesAdapter.posicao
         val serie = seriesList[posicao]
 
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.editarMi -> {
                 //Editar a série
                 val serie = seriesList[posicao]
@@ -120,9 +122,9 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
                 true
             }
             R.id.removerMi -> {
-                //Remover a série
+                //Remover série
                 with(AlertDialog.Builder(this)){
-                    setMessage("Deseja realmente remover item?")
+                    setMessage("Confirma remoção?")
                     setPositiveButton("Sim"){ _, _ ->
                         serieController.apagarSerie(serie.nome)
                         seriesList.removeAt(posicao)
@@ -146,14 +148,14 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
                 temporadaActivityResultLauncher.launch(exibirTelaTemporada)
                 true
             }
-            else ->{
+            else -> {
                 false
             }
         }
     }
 
     override fun onSerieClick(posicao: Int) {
-        val serie = seriesList[posicao]
+        val serie  = seriesList[posicao]
         val consultarSerieIntent = Intent(this, SerieActivity::class.java)
         consultarSerieIntent.putExtra(EXTRA_SERIE, serie)
         startActivity(consultarSerieIntent)
@@ -171,5 +173,4 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         }
         else -> false
     }
-
 }

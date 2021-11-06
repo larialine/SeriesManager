@@ -35,10 +35,10 @@ public class SerieActivity extends AppCompatActivity {
                             activitySerieBinding.generoSp.getSelectedItem().toString()
                     );
 
-                    // retornar a série (dados preenchido na tela) para a MainActivity
+                    //retornar o livro (dados preenchido na tela) para a MainActivity
                     Intent resultadoIntent = new Intent();
                     resultadoIntent.putExtra(MainActivity.EXTRA_SERIE, serie);
-                    // se for edição, devolver posição também
+                    //Se foi edição, devolver posição também
                     if(posicao != -1){
                         resultadoIntent.putExtra(MainActivity.EXTRA_POSICAO, posicao);
                     }
@@ -47,7 +47,7 @@ public class SerieActivity extends AppCompatActivity {
                 }
         );
 
-        // Verificando se é uma edição ou consulta e preenchendo os dados
+        //Verificando se é uma edição ou consulta e preenchendo os campos
         posicao = getIntent().getIntExtra(MainActivity.EXTRA_POSICAO, -1);
         serie = getIntent().getParcelableExtra(MainActivity.EXTRA_SERIE);
         if(serie != null){
@@ -67,6 +67,5 @@ public class SerieActivity extends AppCompatActivity {
                 activitySerieBinding.salvarBt.setVisibility(View.GONE);
             }
         }
-
     }
 }
