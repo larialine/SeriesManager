@@ -35,7 +35,7 @@ class TemporadasRvAdapter(
     }
 
 
-    // Quando uma nova cécular precisar ser criada
+    // Quando uma nova cécula precisar ser criada
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemporadaLayoutHolder {
         // Criar uma nova célula
         val layoutTemporadaBinding =  LayoutTemporadaBinding.inflate(LayoutInflater.from(parent.context), parent, false)

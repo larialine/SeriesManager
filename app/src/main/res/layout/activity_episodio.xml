@@ -2,43 +2,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?android:attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/numeroTemporadaEt"
+        android:id="@+id/numeroEpisodioEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
-        android:hint="Número"
+        android:inputType="text"
+        android:hint="Nome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/anoEt"
+        android:id="@+id/nomeEpisodioEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
-        android:hint="Ano"
+        android:inputType="text"
+        android:hint="Nome Episódio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numeroTemporadaEt" />
+        app:layout_constraintTop_toBottomOf="@+id/numeroEpisodioEt" />
 
     <EditText
-        android:id="@+id/qtdeEpisodiosEt"
+        android:id="@+id/duracaoEpisodioEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        android:hint="Quantidade Episódios"
+        android:hint="Duração"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/anoEt" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeEpisodioEt" />
+
+    <CheckBox
+        android:id="@+id/flagAssistidoCb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Já assistido"
+        android:checked="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/duracaoEpisodioEt" />
 
 
     <Button
@@ -49,6 +56,6 @@
         android:text="Salvar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qtdeEpisodiosEt" />
+        app:layout_constraintTop_toBottomOf="@+id/flagAssistidoCb" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,12 @@
             android:name=".SerieActivity"
             android:exported="true"/>
         <activity
+            android:name=".TemporadaActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".EpisodioActivity"
+            android:exported="true"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

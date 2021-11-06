@@ -94,8 +94,11 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         temporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             resultado ->
             if(resultado.resultCode == RESULT_OK){
-                resultado.data?.getStringExtra(EXTRA_SERIE)?.let {
-                    serieActivityResultLauncher.launch((Intent(this, SerieActivity::class.java)))
+                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
+                resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply{
+                    if(posicao != null && posicao != -1){
+                        seriesList[posicao] = this
+                    }
                 }
             }
         }

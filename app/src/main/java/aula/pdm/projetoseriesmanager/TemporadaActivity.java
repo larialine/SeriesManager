@@ -24,14 +24,14 @@ public class TemporadaActivity extends AppCompatActivity {
         activityTemporadaBinding.salvarBt.setOnClickListener(
                 (View view) -> {
                     temporada = new Temporada(
-                            Integer.parseInt(activityTemporadaBinding.numeroEt.getText().toString()),
+                            Integer.parseInt(activityTemporadaBinding.numeroTemporadaEt.getText().toString()),
                             Integer.parseInt(activityTemporadaBinding.anoEt.getText().toString()),
                             Integer.parseInt(activityTemporadaBinding.qtdeEpisodiosEt.getText().toString())
                     );
 
                     // Retornar temporada (dados preenchido na tela) para MainTemporadaActivity
                     Intent resultadoIntent = new Intent();
-                    resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_TEMPORADA, temporada);
+                    resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_EPISODIO, temporada);
                     //Se foi edição, devolver posição também
                     if(posicao != -1){
                         resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_POSICAO, posicao);
@@ -43,9 +43,9 @@ public class TemporadaActivity extends AppCompatActivity {
 
         // Verificando se é uma edição ou consulta e preenchendo os campos
         posicao = getIntent().getIntExtra(MainActivity.EXTRA_POSICAO, -1);
-        temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_TEMPORADA);
+        temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_EPISODIO);
         if(temporada != null){
-            activityTemporadaBinding.numeroEt.setText(String.valueOf(temporada.getNumero()));
+            activityTemporadaBinding.numeroTemporadaEt.setText(String.valueOf(temporada.getNumero()));
             activityTemporadaBinding.anoEt.setText(String.valueOf(temporada.getAno()));
             activityTemporadaBinding.qtdeEpisodiosEt.setText(String.valueOf(temporada.getEpisodios()));
             if(posicao == -1){
