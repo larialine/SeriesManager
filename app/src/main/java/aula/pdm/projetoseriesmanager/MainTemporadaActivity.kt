@@ -11,9 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.TemporadasRvAdapter
 import aula.pdm.projetoseriesmanager.controller.TemporadaController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainBinding
+import aula.pdm.projetoseriesmanager.databinding.ActivityMainTemporadaBinding
+import aula.pdm.projetoseriesmanager.databinding.ActivitySerieBinding
+import aula.pdm.projetoseriesmanager.databinding.ActivityTemporadaBinding
+import aula.pdm.projetoseriesmanager.model.serie.Serie
 import aula.pdm.projetoseriesmanager.model.temporada.Temporada
 import aula.pdm.projetoseriesmanager.model.temporada.onTemporadaClickListener
 import com.google.android.material.snackbar.Snackbar
+import java.util.ArrayList
 
 class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
 
@@ -23,8 +28,8 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         const val EXTRA_POSICAO = "EXTRA_POSICAO"
     }
 
-    private val activityMainBinding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    private val activityMainTemporadaActivity: ActivityMainTemporadaBinding by lazy {
+        ActivityMainTemporadaBinding.inflate(layoutInflater)
     }
 
     private lateinit var temporadaActivityResultLauncher: ActivityResultLauncher<Intent>
@@ -50,14 +55,13 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         LinearLayoutManager(this)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activityMainBinding.root)
+        setContentView(activityMainTemporadaActivity.root)
 
         // Associando Adapter e LayoutManager ao RecycleView
-        activityMainBinding.lista.adapter = temporadaAdapter
-        activityMainBinding.lista.layoutManager = temporadaLayoutManager
+        activityMainTemporadaActivity.lista.adapter = temporadaAdapter
+        activityMainTemporadaActivity.lista.layoutManager = temporadaLayoutManager
 
 
         temporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -88,7 +92,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
             }
         }
 
-        activityMainBinding.adicionarHistoricoFab.setOnClickListener{
+        activityMainTemporadaActivity.adicionarHistoricoFab.setOnClickListener{
             temporadaActivityResultLauncher.launch(Intent(this, TemporadaActivity::class.java))
         }
 
@@ -116,10 +120,10 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                         temporadaController.apagarTemporada(temporada.numero)
                         temporadasList.removeAt(posicao)
                         temporadaAdapter.notifyDataSetChanged()
-                        Snackbar.make(activityMainBinding.root, "Item removido", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(activityMainTemporadaActivity.root, "Item removido", Snackbar.LENGTH_SHORT).show()
                     }
                     setNegativeButton("Não"){_, _ ->
-                        Snackbar.make(activityMainBinding.root, "Remoção cancelada", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(activityMainTemporadaActivity.root, "Remoção cancelada", Snackbar.LENGTH_SHORT).show()
                     }
                     create()
                 }.show()

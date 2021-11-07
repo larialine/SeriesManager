@@ -99,7 +99,7 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
                 val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
                 resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply{
                     if(posicao != null && posicao != -1){
-                        seriesList[posicao] = this
+                        serieController.buscarSerie(this.nome)
                     }
                 }
             }
@@ -143,14 +143,13 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
                 // Trocar tela para cadastro de temporadas
                 val serie = seriesList[posicao]
                 val exibirTelaTemporada = Intent(this, MainTemporadaActivity::class.java)
-                exibirTelaTemporada.putExtra(EXTRA_SERIE, serie)
-                exibirTelaTemporada.putExtra(EXTRA_POSICAO, posicao)
                 temporadaActivityResultLauncher.launch(exibirTelaTemporada)
                 true
             }
             else -> {
                 false
             }
+
         }
     }
 

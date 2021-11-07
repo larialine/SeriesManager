@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.EpisodiosRvAdapter
 import aula.pdm.projetoseriesmanager.controller.EpisodioController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainBinding
+import aula.pdm.projetoseriesmanager.databinding.ActivityMainEpisodioBinding
 import aula.pdm.projetoseriesmanager.model.episodio.Episodio
 import aula.pdm.projetoseriesmanager.model.episodio.onEpisodioClickListener
 import com.google.android.material.snackbar.Snackbar
@@ -23,8 +24,8 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         const val EXTRA_POSICAO = "EXTRA_POSICAO"
     }
 
-    private val activityMainBinding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    private val activityMainEpisodioActivity: ActivityMainEpisodioBinding by lazy {
+        ActivityMainEpisodioBinding.inflate(layoutInflater)
     }
 
     private lateinit var episodioActivityResultLauncher: ActivityResultLauncher<Intent>
@@ -53,11 +54,11 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activityMainBinding.root)
+        setContentView(activityMainEpisodioActivity.root)
 
         // Associando Adapter e LayoutManager ao RecycleView
-        activityMainBinding.lista.adapter = episodiosAdapter
-        activityMainBinding.lista.layoutManager = episodioLayoutManager
+        activityMainEpisodioActivity.lista.adapter = episodiosAdapter
+        activityMainEpisodioActivity.lista.layoutManager = episodioLayoutManager
 
 
         episodioActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -88,7 +89,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
             }
         }
 
-        activityMainBinding.adicionarHistoricoFab.setOnClickListener{
+        activityMainEpisodioActivity.adicionarHistoricoFab.setOnClickListener{
             episodioActivityResultLauncher.launch(Intent(this, EpisodioActivity::class.java))
         }
 
@@ -116,10 +117,10 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
                         episodioController.apagarEpisodio(episodio.numero)
                         episodiosList.removeAt(posicao)
                         episodiosAdapter.notifyDataSetChanged()
-                        Snackbar.make(activityMainBinding.root, "Item removido", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(activityMainEpisodioActivity.root, "Item removido", Snackbar.LENGTH_SHORT).show()
                     }
                     setNegativeButton("Não"){_, _ ->
-                        Snackbar.make(activityMainBinding.root, "Remoção cancelada", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(activityMainEpisodioActivity.root, "Remoção cancelada", Snackbar.LENGTH_SHORT).show()
                     }
                     create()
                 }.show()
