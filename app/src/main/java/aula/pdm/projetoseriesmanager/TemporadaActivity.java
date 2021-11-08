@@ -31,7 +31,7 @@ public class TemporadaActivity extends AppCompatActivity {
 
                     // Retornar temporada (dados preenchido na tela) para MainTemporadaActivity
                     Intent resultadoIntent = new Intent();
-                    resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_EPISODIO, temporada);
+                    resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_TEMPORADA, temporada);
                     //Se foi edição, devolver posição também
                     if(posicao != -1){
                         resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_POSICAO, posicao);
@@ -43,7 +43,7 @@ public class TemporadaActivity extends AppCompatActivity {
 
         // Verificando se é uma edição ou consulta e preenchendo os campos
         posicao = getIntent().getIntExtra(MainTemporadaActivity.EXTRA_POSICAO, -1);
-        temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_EPISODIO);
+        temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_TEMPORADA);
         if(temporada != null){
             activityTemporadaBinding.numeroTemporadaEt.setText(String.valueOf(temporada.getNumero()));
             activityTemporadaBinding.anoEt.setText(String.valueOf(temporada.getAno()));

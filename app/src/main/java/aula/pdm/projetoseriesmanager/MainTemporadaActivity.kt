@@ -7,6 +7,7 @@ import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.TemporadasRvAdapter
 import aula.pdm.projetoseriesmanager.controller.TemporadaController
@@ -24,7 +25,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
 
     //conseguir passar parametros de uma tela para outra
     companion object Extras{
-        const val EXTRA_EPISODIO = "EXTRA TEMPORADA"
+        const val EXTRA_TEMPORADA = "EXTRA TEMPORADA"
         const val EXTRA_POSICAO = "EXTRA_POSICAO"
     }
 
@@ -68,12 +69,11 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 resultado ->
             if (resultado.resultCode == RESULT_OK){
                 //recebendo a temporada
-                resultado.data?.getParcelableExtra<Temporada>(EXTRA_EPISODIO)?.apply {
+                resultado.data?.getParcelableExtra<Temporada>(EXTRA_TEMPORADA)?.apply {
                     temporadaController.inserirTemporada(this)
                     //adicionando temporada no temporadasList e no Adapter
                     temporadasList.add(this)
                     temporadaAdapter.notifyDataSetChanged()
-
                 }
             }
         }
@@ -82,7 +82,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 resultado ->
             if (resultado.resultCode == RESULT_OK){
                 val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
-                resultado.data?.getParcelableExtra<Temporada>(EXTRA_EPISODIO)?.apply {
+                resultado.data?.getParcelableExtra<Temporada>(EXTRA_TEMPORADA)?.apply {
                     if(posicao != null && posicao != -1){
                         temporadaController.alterarTemporada(this)
                         temporadasList[posicao] = this
@@ -107,7 +107,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 //Editar temporada
                 val temporada = temporadasList[posicao]
                 val editarTemporadaIntent = Intent(this, TemporadaActivity::class.java)
-                editarTemporadaIntent.putExtra(EXTRA_EPISODIO, temporada)
+                editarTemporadaIntent.putExtra(EXTRA_TEMPORADA, temporada)
                 editarTemporadaIntent.putExtra(EXTRA_POSICAO, posicao)
                 editarTemporadaActivityResultLauncher.launch(editarTemporadaIntent)
                 true
@@ -130,6 +130,15 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
 
                 true
             }
+            R.id.visualizarDetalhesMi -> {
+                // Trocar tela para cadastro de episódios
+                val temporada = temporadasList[posicao]
+                val exibirTelaEpisodio = Intent(this, MainEpisodioActivity::class.java)
+                exibirTelaEpisodio.putExtra(EXTRA_TEMPORADA, temporada)
+                exibirTelaEpisodio.putExtra(EXTRA_POSICAO, posicao)
+                startActivity(exibirTelaEpisodio)
+                true
+            }
             else -> {
                 false
             }
@@ -139,7 +148,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
     override fun onTemporadaClick(posicao: Int) {
         val temporada  = temporadasList[posicao]
         val consultarTemporadaIntent = Intent(this, TemporadaActivity::class.java)
-        consultarTemporadaIntent.putExtra(EXTRA_EPISODIO, temporada)
+        consultarTemporadaIntent.putExtra(EXTRA_TEMPORADA, temporada)
         startActivity(consultarTemporadaIntent)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

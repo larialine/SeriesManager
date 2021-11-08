@@ -21,7 +21,7 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
         private val CRIAR_TABELA_EPISODIO_STMT = "CREATE TABLE IF NOT EXISTS ${TABELA_EPISODIO} (" +
                 "${COLUNA_NUMERO} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "${COLUNA_NOME} INTEGER NOT NULL," +
-                "${COLUNA_DURACAO} INTEGER NOT NULL " +
+                "${COLUNA_DURACAO} INTEGER NOT NULL," +
                 "${COLUNA_ASSISTIDO} INTEGER NOT NULL );"
     }
 

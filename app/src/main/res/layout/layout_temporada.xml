@@ -8,24 +8,24 @@
     android:background="?android:attr/selectableItemBackground" >
 
     <TextView
-        android:id="@+id/nomeSerieTv"
+        android:id="@+id/numeroTemporadaTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nome Série"
+        android:text="Número Temporada"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/numeroTemporadaTv"
+        android:id="@+id/anoTemporadaTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Número"
+        android:text="Ano"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/episodiosTv"
-        app:layout_constraintTop_toBottomOf="@id/nomeSerieTv" />
+        app:layout_constraintTop_toBottomOf="@id/numeroTemporadaTv" />
 
     <TextView
         android:id="@+id/episodiosTv"
@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:text="Qntde Episódios"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/numeroTemporadaTv"
+        app:layout_constraintStart_toEndOf="@id/anoTemporadaTv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nomeSerieTv" />
+        app:layout_constraintTop_toBottomOf="@id/numeroTemporadaTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

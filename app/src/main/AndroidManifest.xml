@@ -10,13 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetoSeriesManager">
         <activity
-            android:name=".TemporadaActivity"
-            android:exported="true"/>
-        <activity
             android:name=".EpisodioActivity"
             android:exported="true"/>
         <activity
+            android:name=".TemporadaActivity"
+            android:exported="true"/>
+        <activity
             android:name=".SerieActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".MainEpisodioActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".MainTemporadaActivity"
             android:exported="true"/>
         <activity
             android:name=".MainActivity"

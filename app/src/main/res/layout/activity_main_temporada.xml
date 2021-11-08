@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainTemporadaActivity">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/adicionarHistoricoFab"
@@ -20,7 +21,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_adicionar"
+        app:srcCompat="@drawable/ic_adicionar"
         android:contentDescription="Adicionar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

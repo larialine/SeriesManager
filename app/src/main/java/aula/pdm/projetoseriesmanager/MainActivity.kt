@@ -70,7 +70,6 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
                     //adicionando a série no seriesList e no Adapter
                     seriesList.add(this)
                     seriesAdapter.notifyDataSetChanged()
-
                 }
             }
         }
@@ -91,18 +90,6 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
 
         activityMainBinding.adicionarHistoricoFab.setOnClickListener{
             serieActivityResultLauncher.launch(Intent(this, SerieActivity::class.java))
-        }
-
-        temporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-                resultado ->
-            if(resultado.resultCode == RESULT_OK){
-                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
-                resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply{
-                    if(posicao != null && posicao != -1){
-                        serieController.buscarSerie(this.nome)
-                    }
-                }
-            }
         }
 
     }
@@ -143,7 +130,9 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
                 // Trocar tela para cadastro de temporadas
                 val serie = seriesList[posicao]
                 val exibirTelaTemporada = Intent(this, MainTemporadaActivity::class.java)
-                temporadaActivityResultLauncher.launch(exibirTelaTemporada)
+                exibirTelaTemporada.putExtra(EXTRA_SERIE, serie)
+                exibirTelaTemporada.putExtra(EXTRA_POSICAO, posicao)
+                startActivity(exibirTelaTemporada)
                 true
             }
             else -> {
