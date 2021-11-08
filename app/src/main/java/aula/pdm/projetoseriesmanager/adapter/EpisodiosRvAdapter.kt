@@ -32,7 +32,7 @@ class EpisodiosRvAdapter(
             view: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            MenuInflater(view?.context).inflate(R.menu.context_menu_main, menu)
+            MenuInflater(view?.context).inflate(R.menu.context_menu_main_episodio, menu)
         }
     }
 

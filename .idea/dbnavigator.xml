@@ -24,11 +24,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="4008f1c2-3156-4888-aaac-dd31973a188c">
-        <schema name="main" object-types="table, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4008f1c2-3156-4888-aaac-dd31973a188c">
@@ -82,7 +78,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="C:\Users\Larissa Aline\AppData\Local\Google\AndroidStudio2020.3\device-explorer\emulator-5554\data\data\aula.pdm.projetoseriesmanager\databases\series" schema="main" />
+            <file path="C:\Users\Larissa Aline\AppData\Local\Google\AndroidStudio2020.3\device-explorer\emulator-5554\data\data\aula.pdm.projetoseriesmanager\databases" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

@@ -27,7 +27,8 @@ public class EpisodioActivity extends AppCompatActivity {
                             Integer.parseInt(activityEpisodioBinding.numeroEpisodioEt.getText().toString()),
                             activityEpisodioBinding.nomeEpisodioEt.getText().toString(),
                             Integer.parseInt(activityEpisodioBinding.duracaoEpisodioEt.getText().toString()),
-                            Integer.parseInt(activityEpisodioBinding.flagAssistidoCb.getText().toString())
+                            activityEpisodioBinding.flagAssistidoCb.isChecked() ? true : false
+                            //Integer.parseInt(activityEpisodioBinding.flagAssistidoCb.getText().toString())
                     );
 
                     // Retornar episódio (dados preenchido na tela) para MainTemporadaActivity
@@ -52,7 +53,12 @@ public class EpisodioActivity extends AppCompatActivity {
             activityEpisodioBinding.nomeEpisodioEt.setText(episodio.getNome());
             activityEpisodioBinding.duracaoEpisodioEt.setEnabled(false);
             activityEpisodioBinding.duracaoEpisodioEt.setText(String.valueOf(episodio.getDuracao()));
-            activityEpisodioBinding.flagAssistidoCb.setText(String.valueOf(episodio.getAssistido()));
+            if(activityEpisodioBinding.flagAssistidoCb.isChecked()){
+                activityEpisodioBinding.flagAssistidoCb.setSelected(true);
+            }else{
+                activityEpisodioBinding.flagAssistidoCb.setSelected(false);
+            }
+            //activityEpisodioBinding.flagAssistidoCb.setText(String.valueOf(episodio.getAssistido()));
             if(posicao == -1){
                 for(int i=0; i<activityEpisodioBinding.getRoot().getChildCount(); i++){
                     activityEpisodioBinding.getRoot().getChildAt(i).setEnabled(false);

@@ -30,7 +30,6 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
 
     private lateinit var serieActivityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var editarSerieActivityResultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var temporadaActivityResultLauncher: ActivityResultLauncher<Intent>
 
     // Data source
     private val seriesList: MutableList<Serie> by lazy {

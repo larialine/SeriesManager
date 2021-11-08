@@ -19,7 +19,7 @@ class TemporadasRvAdapter(
     //ViewHolder
     inner class TemporadaLayoutHolder(layoutTemporadaBinding: LayoutTemporadaBinding): RecyclerView.ViewHolder(layoutTemporadaBinding.root), View.OnCreateContextMenuListener{
         val numeroTv: TextView = layoutTemporadaBinding.numeroTemporadaTv
-        val anoTv : TextView = layoutTemporadaBinding.numeroTemporadaTv
+        val anoTv : TextView = layoutTemporadaBinding.anoTemporadaTv
         val episodios: TextView = layoutTemporadaBinding.episodiosTv
         init {
             itemView.setOnCreateContextMenuListener(this)

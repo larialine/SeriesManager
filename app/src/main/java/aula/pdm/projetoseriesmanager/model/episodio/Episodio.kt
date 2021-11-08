@@ -8,5 +8,5 @@ data class Episodio (
     val numero: Int = 0, // chave primária
     val nome: String = "",
     val duracao: Int = 0,
-    val assistido: Int = 0 // 1 - true e 0 - false
+    val assistido: Boolean = false
 ): Parcelable

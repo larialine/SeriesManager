@@ -7,6 +7,7 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import aula.pdm.projetoseriesmanager.R
+import java.lang.Boolean.getBoolean
 
 class EpisodioSqlite(context: Context): EpisodioDAO {
 
@@ -22,7 +23,7 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
                 "${COLUNA_NUMERO} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "${COLUNA_NOME} INTEGER NOT NULL," +
                 "${COLUNA_DURACAO} INTEGER NOT NULL," +
-                "${COLUNA_ASSISTIDO} INTEGER NOT NULL );"
+                "${COLUNA_ASSISTIDO} BOOLEAN );"
     }
 
     // Referência para o banco de dados
@@ -61,7 +62,7 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
                     getInt(getColumnIndexOrThrow(COLUNA_NUMERO)),
                     getString(getColumnIndexOrThrow(COLUNA_NOME)),
                     getInt(getColumnIndexOrThrow(COLUNA_DURACAO)),
-                    getInt(getColumnIndexOrThrow(COLUNA_ASSISTIDO))
+                    getBoolean(getColumnIndexOrThrow(COLUNA_ASSISTIDO).toString())
                 )
             }
         }
@@ -82,7 +83,8 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
                         getInt(getColumnIndexOrThrow(COLUNA_NUMERO)),
                         getString(getColumnIndexOrThrow(COLUNA_NOME)),
                         getInt(getColumnIndexOrThrow(COLUNA_DURACAO)),
-                        getInt(getColumnIndexOrThrow(COLUNA_ASSISTIDO))
+                        getBoolean(getColumnIndexOrThrow(COLUNA_ASSISTIDO).toString())
+
                     )
                 )
             }

@@ -127,6 +127,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
 
                 true
             }
+
             else -> {
                 false
             }

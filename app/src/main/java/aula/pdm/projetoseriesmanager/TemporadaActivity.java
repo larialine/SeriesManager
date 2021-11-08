@@ -25,7 +25,7 @@ public class TemporadaActivity extends AppCompatActivity {
                 (View view) -> {
                     temporada = new Temporada(
                             Integer.parseInt(activityTemporadaBinding.numeroTemporadaEt.getText().toString()),
-                            Integer.parseInt(activityTemporadaBinding.anoEt.getText().toString()),
+                            Integer.parseInt(activityTemporadaBinding.anoTemporadaEt.getText().toString()),
                             Integer.parseInt(activityTemporadaBinding.qtdeEpisodiosEt.getText().toString())
                     );
 
@@ -46,7 +46,7 @@ public class TemporadaActivity extends AppCompatActivity {
         temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_TEMPORADA);
         if(temporada != null){
             activityTemporadaBinding.numeroTemporadaEt.setText(String.valueOf(temporada.getNumero()));
-            activityTemporadaBinding.anoEt.setText(String.valueOf(temporada.getAno()));
+            activityTemporadaBinding.anoTemporadaEt.setText(String.valueOf(temporada.getAno()));
             activityTemporadaBinding.qtdeEpisodiosEt.setText(String.valueOf(temporada.getEpisodios()));
             if(posicao == -1){
                 for(int i=0; i<activityTemporadaBinding.getRoot().getChildCount(); i++){
