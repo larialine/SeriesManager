@@ -56,10 +56,6 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
         super.onCreate(savedInstanceState)
         setContentView(activityMainBinding.root)
 
-
-        //Inicializando lista de series
-        inicializarSeriesList()
-
         // Associando Adapter e LayoutManager ao RecycleView
         activityMainBinding.lista.adapter = seriesAdapter
         activityMainBinding.lista.layoutManager = livrosLayoutManager
@@ -95,19 +91,6 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
             serieActivityResultLauncher.launch(Intent(this, SerieActivity::class.java))
         }
 
-    }
-
-    private fun inicializarSeriesList(){
-        for (i in 1..3){
-            seriesList.add(
-                Serie(
-                    "nome ${i}",
-                    i,
-                    "emissora ${i}",
-                    "genero ${i}"
-                )
-            )
-        }
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
