@@ -40,7 +40,7 @@ class SeriesRvAdapter(
         val layoutSerieBinding = LayoutSerieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         //Criar um viewHolder associado a nova célula
-        val viewHolder: SerieLayoutHolder = SerieLayoutHolder(layoutSerieBinding)
+        val viewHolder = SerieLayoutHolder(layoutSerieBinding)
         return viewHolder
     }
 

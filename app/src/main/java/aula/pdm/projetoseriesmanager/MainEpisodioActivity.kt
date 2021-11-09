@@ -140,6 +140,8 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         consultarEpisodioIntent.putExtra(EXTRA_EPISODIO, episodio)
         startActivity(consultarEpisodioIntent)
     }
+
+    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -151,5 +153,5 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
             true
         }
         else -> false
-    }
+    }*/
 }

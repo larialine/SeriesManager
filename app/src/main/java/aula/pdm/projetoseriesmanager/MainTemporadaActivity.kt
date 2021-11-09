@@ -151,6 +151,8 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         consultarTemporadaIntent.putExtra(EXTRA_TEMPORADA, temporada)
         startActivity(consultarTemporadaIntent)
     }
+
+    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -163,4 +165,5 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         }
         else -> false
     }
+    */
 }

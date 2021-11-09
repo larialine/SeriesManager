@@ -56,13 +56,17 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
         super.onCreate(savedInstanceState)
         setContentView(activityMainBinding.root)
 
+
+        //Inicializando lista de series
+        inicializarSeriesList()
+
         // Associando Adapter e LayoutManager ao RecycleView
         activityMainBinding.lista.adapter = seriesAdapter
         activityMainBinding.lista.layoutManager = livrosLayoutManager
 
         serieActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 resultado ->
-            if (resultado.resultCode == AppCompatActivity.RESULT_OK){
+            if (resultado.resultCode == RESULT_OK){
                 //recebendo a série
                 resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply {
                     serieController.inserirSerie(this)
@@ -91,6 +95,19 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
             serieActivityResultLauncher.launch(Intent(this, SerieActivity::class.java))
         }
 
+    }
+
+    private fun inicializarSeriesList(){
+        for (i in 1..3){
+            seriesList.add(
+                Serie(
+                    "nome ${i}",
+                    i,
+                    "emissora ${i}",
+                    "genero ${i}"
+                )
+            )
+        }
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -148,7 +165,7 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
         startActivity(consultarSerieIntent)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
@@ -159,5 +176,5 @@ class MainActivity: AppCompatActivity(), onSerieClickListener {
             true
         }
         else -> false
-    }
+    }*/
 }
