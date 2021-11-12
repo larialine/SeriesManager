@@ -34,7 +34,7 @@ public class TemporadaActivity extends AppCompatActivity {
                     resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_TEMPORADA, temporada);
                     //Se foi edição, devolver posição também
                     if(posicao != -1){
-                        resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_POSICAO, posicao);
+                        resultadoIntent.putExtra(MainTemporadaActivity.EXTRA_POSICAO_TEMPORADA, posicao);
                     }
                     setResult(RESULT_OK, resultadoIntent);
                     finish();
@@ -42,7 +42,7 @@ public class TemporadaActivity extends AppCompatActivity {
         );
 
         // Verificando se é uma edição ou consulta e preenchendo os campos
-        posicao = getIntent().getIntExtra(MainTemporadaActivity.EXTRA_POSICAO, -1);
+        posicao = getIntent().getIntExtra(MainTemporadaActivity.EXTRA_POSICAO_TEMPORADA, -1);
         temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_TEMPORADA);
         if(temporada != null){
             activityTemporadaBinding.numeroTemporadaEt.setText(String.valueOf(temporada.getNumero()));

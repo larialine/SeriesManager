@@ -25,6 +25,9 @@
             android:name=".MainTemporadaActivity"
             android:exported="true"/>
         <activity
+            android:name=".MainActivityLivro"
+            android:exported="true"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

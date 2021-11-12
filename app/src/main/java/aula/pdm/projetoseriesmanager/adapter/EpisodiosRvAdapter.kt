@@ -1,22 +1,20 @@
 package aula.pdm.projetoseriesmanager.adapter
 
 import android.view.*
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import aula.pdm.projetoseriesmanager.R
 import aula.pdm.projetoseriesmanager.databinding.LayoutEpisodioBinding
 import aula.pdm.projetoseriesmanager.model.episodio.Episodio
 import aula.pdm.projetoseriesmanager.model.episodio.onEpisodioClickListener
-import org.w3c.dom.Text
 
 class EpisodiosRvAdapter(
     private val onEpisodioClickListener: onEpisodioClickListener,
     private val episodiosList: MutableList<Episodio>
-):RecyclerView.Adapter<EpisodiosRvAdapter.EpisodioLayoutHolder>(){
+): RecyclerView.Adapter<EpisodiosRvAdapter.EpisodioLayoutHolder>() {
 
     //Posição que será recuperada pelo menu de contexto
-    var posicao: Int = -1
+    var posicaoEpisodio: Int = -1
 
     //ViewHolder
     inner class EpisodioLayoutHolder(layoutEpisodioBinding: LayoutEpisodioBinding): RecyclerView.ViewHolder(layoutEpisodioBinding.root), View.OnCreateContextMenuListener{
@@ -43,7 +41,7 @@ class EpisodiosRvAdapter(
         val layoutEpisodioBinding =  LayoutEpisodioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         //Criar um viewHolder associado a nova célula
-        val viewHolder: EpisodioLayoutHolder = EpisodioLayoutHolder(layoutEpisodioBinding)
+        val viewHolder = EpisodioLayoutHolder(layoutEpisodioBinding)
         return viewHolder
     }
 
@@ -61,7 +59,7 @@ class EpisodiosRvAdapter(
                 onEpisodioClickListener.onEpisodioClick(position)
             }
             itemView.setOnLongClickListener{
-                posicao = position
+                posicaoEpisodio = position
                 false
             }
         }

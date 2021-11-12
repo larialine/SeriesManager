@@ -7,26 +7,20 @@ import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.TemporadasRvAdapter
 import aula.pdm.projetoseriesmanager.controller.TemporadaController
-import aula.pdm.projetoseriesmanager.databinding.ActivityMainBinding
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainTemporadaBinding
-import aula.pdm.projetoseriesmanager.databinding.ActivitySerieBinding
-import aula.pdm.projetoseriesmanager.databinding.ActivityTemporadaBinding
-import aula.pdm.projetoseriesmanager.model.serie.Serie
 import aula.pdm.projetoseriesmanager.model.temporada.Temporada
 import aula.pdm.projetoseriesmanager.model.temporada.onTemporadaClickListener
 import com.google.android.material.snackbar.Snackbar
-import java.util.ArrayList
 
 class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
 
     //conseguir passar parametros de uma tela para outra
     companion object Extras{
         const val EXTRA_TEMPORADA = "EXTRA TEMPORADA"
-        const val EXTRA_POSICAO = "EXTRA_POSICAO"
+        const val EXTRA_POSICAO_TEMPORADA = "EXTRA_POSICAO_TEMPORADA"
     }
 
     private val activityMainTemporadaActivity: ActivityMainTemporadaBinding by lazy {
@@ -61,8 +55,8 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         setContentView(activityMainTemporadaActivity.root)
 
         // Associando Adapter e LayoutManager ao RecycleView
-        activityMainTemporadaActivity.lista.adapter = temporadaAdapter
-        activityMainTemporadaActivity.lista.layoutManager = temporadaLayoutManager
+        activityMainTemporadaActivity.temporadasRv.adapter = temporadaAdapter
+        activityMainTemporadaActivity.temporadasRv.layoutManager = temporadaLayoutManager
 
 
         temporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -81,7 +75,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         editarTemporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 resultado ->
             if (resultado.resultCode == RESULT_OK){
-                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
+                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO_TEMPORADA, -1)
                 resultado.data?.getParcelableExtra<Temporada>(EXTRA_TEMPORADA)?.apply {
                     if(posicao != null && posicao != -1){
                         temporadaController.alterarTemporada(this)
@@ -92,14 +86,14 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
             }
         }
 
-        activityMainTemporadaActivity.adicionarHistoricoFab.setOnClickListener{
+        activityMainTemporadaActivity.adicionarTemporadaFab.setOnClickListener{
             temporadaActivityResultLauncher.launch(Intent(this, TemporadaActivity::class.java))
         }
 
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val posicao = temporadaAdapter.posicao
+        val posicao = temporadaAdapter.posicaoTemporada
         val temporada = temporadasList[posicao]
 
         return when (item.itemId) {
@@ -108,7 +102,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 val temporada = temporadasList[posicao]
                 val editarTemporadaIntent = Intent(this, TemporadaActivity::class.java)
                 editarTemporadaIntent.putExtra(EXTRA_TEMPORADA, temporada)
-                editarTemporadaIntent.putExtra(EXTRA_POSICAO, posicao)
+                editarTemporadaIntent.putExtra(EXTRA_POSICAO_TEMPORADA, posicao)
                 editarTemporadaActivityResultLauncher.launch(editarTemporadaIntent)
                 true
             }
@@ -135,7 +129,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 val temporada = temporadasList[posicao]
                 val exibirTelaEpisodio = Intent(this, MainEpisodioActivity::class.java)
                 exibirTelaEpisodio.putExtra(EXTRA_TEMPORADA, temporada)
-                exibirTelaEpisodio.putExtra(EXTRA_POSICAO, posicao)
+                exibirTelaEpisodio.putExtra(EXTRA_POSICAO_TEMPORADA, posicao)
                 startActivity(exibirTelaEpisodio)
                 true
             }

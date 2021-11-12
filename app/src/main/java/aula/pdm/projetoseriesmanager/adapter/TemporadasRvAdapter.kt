@@ -11,10 +11,10 @@ import aula.pdm.projetoseriesmanager.model.temporada.onTemporadaClickListener
 class TemporadasRvAdapter(
     private val onTemporadaClickListener: onTemporadaClickListener,
     private val temporadasList: MutableList<Temporada>
-):RecyclerView.Adapter<TemporadasRvAdapter.TemporadaLayoutHolder>(){
+): RecyclerView.Adapter<TemporadasRvAdapter.TemporadaLayoutHolder>() {
 
     //Posição que será recuperada pelo menu de contexto
-    var posicao: Int = -1
+    var posicaoTemporada: Int = -1
 
     //ViewHolder
     inner class TemporadaLayoutHolder(layoutTemporadaBinding: LayoutTemporadaBinding): RecyclerView.ViewHolder(layoutTemporadaBinding.root), View.OnCreateContextMenuListener{
@@ -41,7 +41,7 @@ class TemporadasRvAdapter(
         val layoutTemporadaBinding =  LayoutTemporadaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         //Criar um viewHolder associado a nova célula
-        val viewHolder: TemporadaLayoutHolder = TemporadaLayoutHolder(layoutTemporadaBinding)
+        val viewHolder = TemporadaLayoutHolder(layoutTemporadaBinding)
         return viewHolder
     }
 
@@ -59,7 +59,7 @@ class TemporadasRvAdapter(
                 onTemporadaClickListener.onTemporadaClick(position)
             }
             itemView.setOnLongClickListener{
-                posicao = position
+                posicaoTemporada = position
                 false
             }
         }

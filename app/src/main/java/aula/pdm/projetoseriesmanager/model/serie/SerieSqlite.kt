@@ -18,11 +18,11 @@ class SerieSqlite(contexto: Context): SerieDAO {
         private val COLUNA_EMISSORA = "emissora"
         private val COLUNA_GENERO = "genero"
 
-        private val CRIAR_TABELA_SERIE_STMT = "CREATE TABLE IF NOT EXISTS $TABELA_SERIE (" +
-                "$COLUNA_NOME TEXT NOT NULL PRIMARY KEY," +
-                "$COLUNA_ANO INTEGER NOT NULL," +
-                "$COLUNA_EMISSORA TEXT NOT NULL," +
-                "$COLUNA_GENERO TEXT NOT NULL );"
+        private val CRIAR_TABELA_SERIE_STMT = "CREATE TABLE IF NOT EXISTS ${TABELA_SERIE} (" +
+                "${COLUNA_NOME} TEXT NOT NULL PRIMARY KEY," +
+                "${COLUNA_ANO} INTEGER NOT NULL," +
+                "${COLUNA_EMISSORA} TEXT NOT NULL," +
+                "${COLUNA_GENERO} TEXT NOT NULL );"
     }
 
     // Referência para o banco de dados
@@ -47,7 +47,7 @@ class SerieSqlite(contexto: Context): SerieDAO {
             true,
             TABELA_SERIE,
             null,                   // parametros
-            "$COLUNA_NOME = ?", //where
+            "${COLUNA_NOME} = ?", //where
             arrayOf(nome),
             null,
             null,
@@ -71,9 +71,9 @@ class SerieSqlite(contexto: Context): SerieDAO {
     }
 
     override fun recuperarSeries(): MutableList<Serie> {
-        val serieCursor = seriesBd.rawQuery("SELECT * FROM $TABELA_SERIE;" , null)
-
         val seriesList = mutableListOf<Serie>()
+
+        val serieCursor = seriesBd.rawQuery("SELECT * FROM ${TABELA_SERIE};", null)
 
         while(serieCursor.moveToNext()){
             with(serieCursor){
@@ -93,11 +93,11 @@ class SerieSqlite(contexto: Context): SerieDAO {
     override fun atualizarSerie(serie: Serie): Int {
         val serieCv = converterSerieParaContentValues(serie)
 
-        return seriesBd.update(TABELA_SERIE, serieCv, "$COLUNA_NOME = ?", arrayOf(serie.nome))
+        return seriesBd.update(TABELA_SERIE, serieCv, "${COLUNA_NOME} = ?", arrayOf(serie.nome))
     }
 
     override fun removerSerie(nome: String): Int {
-        return seriesBd.delete(TABELA_SERIE, "$COLUNA_NOME = ?", arrayOf(nome))
+        return seriesBd.delete(TABELA_SERIE, "${COLUNA_NOME} = ?", arrayOf(nome))
     }
 
     private fun converterSerieParaContentValues(serie: Serie) = ContentValues().also {

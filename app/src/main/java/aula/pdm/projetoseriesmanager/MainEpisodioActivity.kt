@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.EpisodiosRvAdapter
 import aula.pdm.projetoseriesmanager.controller.EpisodioController
-import aula.pdm.projetoseriesmanager.databinding.ActivityMainBinding
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainEpisodioBinding
 import aula.pdm.projetoseriesmanager.model.episodio.Episodio
 import aula.pdm.projetoseriesmanager.model.episodio.onEpisodioClickListener
@@ -21,7 +20,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
     //conseguir passar parametros de uma tela para outra
     companion object Extras{
         const val EXTRA_EPISODIO = "EXTRA EPISODIO"
-        const val EXTRA_POSICAO = "EXTRA_POSICAO"
+        const val EXTRA_POSICAO_EPISODIO = "EXTRA_POSICAO_EPISODIO"
     }
 
     private val activityMainEpisodioActivity: ActivityMainEpisodioBinding by lazy {
@@ -57,8 +56,8 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         setContentView(activityMainEpisodioActivity.root)
 
         // Associando Adapter e LayoutManager ao RecycleView
-        activityMainEpisodioActivity.lista.adapter = episodiosAdapter
-        activityMainEpisodioActivity.lista.layoutManager = episodioLayoutManager
+        activityMainEpisodioActivity.episodiosRv.adapter = episodiosAdapter
+        activityMainEpisodioActivity.episodiosRv.layoutManager = episodioLayoutManager
 
 
         episodioActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -78,7 +77,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         editarEpisodioActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 resultado ->
             if (resultado.resultCode == RESULT_OK){
-                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO, -1)
+                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO_EPISODIO, -1)
                 resultado.data?.getParcelableExtra<Episodio>(EXTRA_EPISODIO)?.apply {
                     if(posicao != null && posicao != -1){
                         episodioController.alterarEpisodio(this)
@@ -89,14 +88,14 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
             }
         }
 
-        activityMainEpisodioActivity.adicionarHistoricoFab.setOnClickListener{
+        activityMainEpisodioActivity.adicionarEpisodioFab.setOnClickListener{
             episodioActivityResultLauncher.launch(Intent(this, EpisodioActivity::class.java))
         }
 
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val posicao = episodiosAdapter.posicao
+        val posicao = episodiosAdapter.posicaoEpisodio
         val episodio = episodiosList[posicao]
 
         return when (item.itemId) {
@@ -105,7 +104,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
                 val episodio = episodiosList[posicao]
                 val editarEpisodioIntent = Intent(this, EpisodioActivity::class.java)
                 editarEpisodioIntent.putExtra(EXTRA_EPISODIO, episodio)
-                editarEpisodioIntent.putExtra(EXTRA_POSICAO, posicao)
+                editarEpisodioIntent.putExtra(EXTRA_POSICAO_EPISODIO, posicao)
                 editarEpisodioActivityResultLauncher.launch(editarEpisodioIntent)
                 true
             }

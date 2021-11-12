@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
@@ -23,16 +23,17 @@
         android:layout_height="wrap_content"
         android:text="Ano"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/generoSerieTv"
+        app:layout_constraintEnd_toStartOf="@id/emissoraSerieTv"
         app:layout_constraintTop_toBottomOf="@id/nomeSerieTv" />
 
     <TextView
-        android:id="@+id/generoSerieTv"
+        android:id="@+id/emissoraSerieTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Gênero"
+        android:text="Editora"
         app:layout_constraintStart_toEndOf="@id/anoSerieTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nomeSerieTv" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

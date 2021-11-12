@@ -36,7 +36,7 @@ public class EpisodioActivity extends AppCompatActivity {
                     resultadoIntent.putExtra(MainEpisodioActivity.EXTRA_EPISODIO, episodio);
                     //Se foi edição, devolver posição também
                     if(posicao != -1){
-                        resultadoIntent.putExtra(MainEpisodioActivity.EXTRA_POSICAO, posicao);
+                        resultadoIntent.putExtra(MainEpisodioActivity.EXTRA_POSICAO_EPISODIO, posicao);
                     }
                     setResult(RESULT_OK, resultadoIntent);
                     finish();
@@ -44,7 +44,7 @@ public class EpisodioActivity extends AppCompatActivity {
         );
 
         // Verificando se é uma edição ou consulta e preenchendo os campos
-        posicao = getIntent().getIntExtra(MainEpisodioActivity.EXTRA_POSICAO, -1);
+        posicao = getIntent().getIntExtra(MainEpisodioActivity.EXTRA_POSICAO_EPISODIO, -1);
         episodio = getIntent().getParcelableExtra(MainEpisodioActivity.EXTRA_EPISODIO);
         if(episodio != null){
             activityEpisodioBinding.numeroEpisodioEt.setEnabled(false);

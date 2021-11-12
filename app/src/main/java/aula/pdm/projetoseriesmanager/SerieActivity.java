@@ -40,7 +40,7 @@ public class SerieActivity extends AppCompatActivity {
                     resultadoIntent.putExtra(MainActivity.EXTRA_SERIE, serie);
                     //Se foi edição, devolver posição também
                     if(posicao != -1){
-                        resultadoIntent.putExtra(MainActivity.EXTRA_POSICAO, posicao);
+                        resultadoIntent.putExtra(MainActivity.EXTRA_POSICAO_SERIE, posicao);
                     }
                     setResult(RESULT_OK, resultadoIntent);
                     finish();
@@ -48,7 +48,7 @@ public class SerieActivity extends AppCompatActivity {
         );
 
         //Verificando se é uma edição ou consulta e preenchendo os campos
-        posicao = getIntent().getIntExtra(MainActivity.EXTRA_POSICAO, -1);
+        posicao = getIntent().getIntExtra(MainActivity.EXTRA_POSICAO_SERIE, -1);
         serie = getIntent().getParcelableExtra(MainActivity.EXTRA_SERIE);
         if(serie != null){
             activitySerieBinding.nomeEt.setEnabled(false);
@@ -57,12 +57,13 @@ public class SerieActivity extends AppCompatActivity {
             activitySerieBinding.emissoraEt.setText(serie.getEmissora());
 
             generoList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.genero)));
-            ArrayAdapter<String> generoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generoList);
+            ArrayAdapter<String> generoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, generoList);
             activitySerieBinding.generoSp.setAdapter(generoAdapter);
 
             if(posicao == -1){
                 for(int i=0; i<activitySerieBinding.getRoot().getChildCount(); i++){
                     activitySerieBinding.getRoot().getChildAt(i).setEnabled(false);
+                    activitySerieBinding.generoSp.setEnabled(false);
                 }
                 activitySerieBinding.salvarBt.setVisibility(View.GONE);
             }
