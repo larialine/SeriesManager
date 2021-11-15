@@ -55,6 +55,12 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         super.onCreate(savedInstanceState)
         setContentView(activityMainEpisodioActivity.root)
 
+        supportActionBar?.title = "Episódios"
+
+        intent.getStringExtra(MainTemporadaActivity.NUMERO_TEMPORADA)?.run {
+            activityMainEpisodioActivity.temporadaTv.text = this
+        }
+
         // Associando Adapter e LayoutManager ao RecycleView
         activityMainEpisodioActivity.episodiosRv.adapter = episodiosAdapter
         activityMainEpisodioActivity.episodiosRv.layoutManager = episodioLayoutManager

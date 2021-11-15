@@ -27,7 +27,8 @@ public class EpisodioActivity extends AppCompatActivity {
                             Integer.parseInt(activityEpisodioBinding.numeroEpisodioEt.getText().toString()),
                             activityEpisodioBinding.nomeEpisodioEt.getText().toString(),
                             Integer.parseInt(activityEpisodioBinding.duracaoEpisodioEt.getText().toString()),
-                            activityEpisodioBinding.flagAssistidoCb.isChecked() ? true : false
+                            activityEpisodioBinding.flagAssistidoCb.isChecked() ? true : false,
+                            Integer.parseInt(activityEpisodioBinding.numeroTemporadaTv.getText().toString())
                             //Integer.parseInt(activityEpisodioBinding.flagAssistidoCb.getText().toString())
                     );
 
@@ -47,6 +48,7 @@ public class EpisodioActivity extends AppCompatActivity {
         posicao = getIntent().getIntExtra(MainEpisodioActivity.EXTRA_POSICAO_EPISODIO, -1);
         episodio = getIntent().getParcelableExtra(MainEpisodioActivity.EXTRA_EPISODIO);
         if(episodio != null){
+            activityEpisodioBinding.numeroTemporadaTv.setEnabled(false);
             activityEpisodioBinding.numeroEpisodioEt.setEnabled(false);
             activityEpisodioBinding.numeroEpisodioEt.setText(String.valueOf(episodio.getNumero()));
             activityEpisodioBinding.nomeEpisodioEt.setEnabled(false);

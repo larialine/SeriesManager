@@ -7,6 +7,8 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import aula.pdm.projetoseriesmanager.R
+import aula.pdm.projetoseriesmanager.model.temporada.Temporada
+import aula.pdm.projetoseriesmanager.model.temporada.TemporadaSqlite
 import java.lang.Boolean.getBoolean
 
 class EpisodioSqlite(context: Context): EpisodioDAO {
@@ -18,12 +20,15 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
         private val COLUNA_NOME = "nome"
         private val COLUNA_DURACAO = "duracao"
         private val COLUNA_ASSISTIDO = "assistido"
+        private val COLUNA_TEMPORADA = "serie"
 
         private val CRIAR_TABELA_EPISODIO_STMT = "CREATE TABLE IF NOT EXISTS ${TABELA_EPISODIO} (" +
-                "${COLUNA_NUMERO} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "${COLUNA_NUMERO} INTEGER NOT NULL PRIMARY KEY," +
                 "${COLUNA_NOME} INTEGER NOT NULL," +
                 "${COLUNA_DURACAO} INTEGER NOT NULL," +
-                "${COLUNA_ASSISTIDO} BOOLEAN );"
+                "${COLUNA_ASSISTIDO} BOOLEAN NOT NULL, " +
+                "${COLUNA_TEMPORADA} INTEGER NOT NULL, " +
+                "FOREIGN KEY(${COLUNA_TEMPORADA}) REFERENCES temporada(numero));"
     }
 
     // Referência para o banco de dados
@@ -62,7 +67,8 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
                     getInt(getColumnIndexOrThrow(COLUNA_NUMERO)),
                     getString(getColumnIndexOrThrow(COLUNA_NOME)),
                     getInt(getColumnIndexOrThrow(COLUNA_DURACAO)),
-                    getBoolean(getColumnIndexOrThrow(COLUNA_ASSISTIDO).toString())
+                    getBoolean(getColumnIndexOrThrow(COLUNA_ASSISTIDO).toString()),
+                    getInt(getColumnIndexOrThrow(COLUNA_TEMPORADA))
                 )
             }
         }
@@ -72,9 +78,9 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
     }
 
     override fun recuperarEpisodios(): MutableList<Episodio> {
-        val episodiosCursor = episodiosBd.rawQuery("SELECT * FROM ${TABELA_EPISODIO};", null)
-
         val episodiosList = mutableListOf<Episodio>()
+
+        val episodiosCursor = episodiosBd.rawQuery("SELECT * FROM ${TABELA_EPISODIO};", null)
 
         while(episodiosCursor.moveToNext()){
             with(episodiosCursor){
@@ -83,7 +89,8 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
                         getInt(getColumnIndexOrThrow(COLUNA_NUMERO)),
                         getString(getColumnIndexOrThrow(COLUNA_NOME)),
                         getInt(getColumnIndexOrThrow(COLUNA_DURACAO)),
-                        getBoolean(getColumnIndexOrThrow(COLUNA_ASSISTIDO).toString())
+                        getBoolean(getColumnIndexOrThrow(COLUNA_ASSISTIDO).toString()),
+                        getInt(getColumnIndexOrThrow(COLUNA_TEMPORADA))
 
                     )
                 )
@@ -108,6 +115,7 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
             put(COLUNA_NOME, episodio.nome)
             put(COLUNA_DURACAO, episodio.duracao)
             put(COLUNA_ASSISTIDO, episodio.assistido)
+            put(COLUNA_TEMPORADA, episodio.temporada)
         }
     }
 }

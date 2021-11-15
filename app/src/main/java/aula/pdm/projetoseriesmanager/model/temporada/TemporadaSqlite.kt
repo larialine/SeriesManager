@@ -16,11 +16,14 @@ class TemporadaSqlite(context: Context): TemporadaDAO {
         private val COLUNA_NUMERO = "numero"
         private val COLUNA_ANO = "ano"
         private val COLUNA_EPISODIOS = "episodios"
+        private val COLUNA_SERIE = "serie"
 
         private val CRIAR_TABELA_TEMPORADA_STMT = "CREATE TABLE IF NOT EXISTS ${TABELA_TEMPORADA} (" +
                 "${COLUNA_NUMERO} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "${COLUNA_ANO} INTEGER NOT NULL," +
-                "${COLUNA_EPISODIOS} INTEGER NOT NULL );"
+                "${COLUNA_EPISODIOS} INTEGER NOT NULL, " +
+                "${COLUNA_SERIE} TEXT NOT NULL," +
+                "FOREIGN KEY (${COLUNA_SERIE}) REFERENCES serie(nome));"
     }
 
     // Referência para o banco de dados
@@ -58,7 +61,8 @@ class TemporadaSqlite(context: Context): TemporadaDAO {
                 Temporada(
                     getInt(getColumnIndexOrThrow(COLUNA_NUMERO)),
                     getInt(getColumnIndexOrThrow(COLUNA_ANO)),
-                    getInt(getColumnIndexOrThrow(COLUNA_EPISODIOS))
+                    getInt(getColumnIndexOrThrow(COLUNA_EPISODIOS)),
+                    getString(getColumnIndexOrThrow(COLUNA_SERIE))
                 )
             }
         }
@@ -67,10 +71,10 @@ class TemporadaSqlite(context: Context): TemporadaDAO {
         }
     }
 
-    override fun recuperarTemporadas(): MutableList<Temporada> {
+    override fun recuperarTemporadas(nome: String): MutableList<Temporada> {
         val temporadasList = mutableListOf<Temporada>()
 
-        val temporadasCursor = temporadasBd.rawQuery("SELECT * FROM ${TABELA_TEMPORADA};", null)
+        val temporadasCursor = temporadasBd.rawQuery("SELECT * FROM ${TABELA_TEMPORADA} WHERE ${COLUNA_SERIE} = ?;", arrayOf(nome))
 
         while(temporadasCursor.moveToNext()){
             with(temporadasCursor){
@@ -78,7 +82,8 @@ class TemporadaSqlite(context: Context): TemporadaDAO {
                     Temporada(
                         getInt(getColumnIndexOrThrow(COLUNA_NUMERO)),
                         getInt(getColumnIndexOrThrow(COLUNA_ANO)),
-                        getInt(getColumnIndexOrThrow(COLUNA_EPISODIOS))
+                        getInt(getColumnIndexOrThrow(COLUNA_EPISODIOS)),
+                        getString(getColumnIndexOrThrow(COLUNA_SERIE))
                     )
                 )
             }
@@ -101,6 +106,7 @@ class TemporadaSqlite(context: Context): TemporadaDAO {
             put(COLUNA_NUMERO, temporada.numero)
             put(COLUNA_ANO, temporada.ano)
             put(COLUNA_EPISODIOS, temporada.episodios)
+            put(COLUNA_SERIE, temporada.serie)
         }
     }
 }

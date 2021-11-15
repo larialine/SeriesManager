@@ -6,6 +6,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EpisodioActivity">
 
+    <TextView
+        android:id="@+id/numeroTemporadaTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Número Temporada"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/numeroEpisodioEt"
         android:layout_width="0dp"
@@ -13,9 +23,9 @@
         android:ems="10"
         android:inputType="number"
         android:hint="Número Episódio"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numeroTemporadaTv" />
 
     <EditText
         android:id="@+id/nomeEpisodioEt"

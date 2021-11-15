@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Serie (
-    val nome: String = "", //chave primária
+    var nome: String = "", //chave primária
     val ano: Int = 0,
     val emissora: String = "",
     val genero: String = ""

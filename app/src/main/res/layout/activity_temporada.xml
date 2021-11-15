@@ -9,6 +9,16 @@
     android:background="?android:attr/selectableItemBackground"
     tools:context=".TemporadaActivity">
 
+    <TextView
+        android:id="@+id/nomeSerieTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nome Série"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/numeroTemporadaEt"
         android:layout_width="0dp"
@@ -16,9 +26,9 @@
         android:ems="10"
         android:inputType="number"
         android:hint="Número"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeSerieTv" />
 
     <EditText
         android:id="@+id/anoTemporadaEt"

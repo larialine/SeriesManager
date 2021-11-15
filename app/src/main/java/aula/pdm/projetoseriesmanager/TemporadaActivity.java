@@ -21,12 +21,15 @@ public class TemporadaActivity extends AppCompatActivity {
         activityTemporadaBinding = ActivityTemporadaBinding.inflate(getLayoutInflater());
         setContentView(activityTemporadaBinding.getRoot());
 
+        activityTemporadaBinding.nomeSerieTv.setText(getIntent().getStringExtra(MainTemporadaActivity.NOME_DA_SERIE));
+
         activityTemporadaBinding.salvarBt.setOnClickListener(
                 (View view) -> {
                     temporada = new Temporada(
                             Integer.parseInt(activityTemporadaBinding.numeroTemporadaEt.getText().toString()),
                             Integer.parseInt(activityTemporadaBinding.anoTemporadaEt.getText().toString()),
-                            Integer.parseInt(activityTemporadaBinding.qtdeEpisodiosEt.getText().toString())
+                            Integer.parseInt(activityTemporadaBinding.qtdeEpisodiosEt.getText().toString()),
+                            activityTemporadaBinding.nomeSerieTv.getText().toString()
                     );
 
                     // Retornar temporada (dados preenchido na tela) para MainTemporadaActivity
@@ -45,6 +48,7 @@ public class TemporadaActivity extends AppCompatActivity {
         posicao = getIntent().getIntExtra(MainTemporadaActivity.EXTRA_POSICAO_TEMPORADA, -1);
         temporada = getIntent().getParcelableExtra(MainTemporadaActivity.EXTRA_TEMPORADA);
         if(temporada != null){
+            activityTemporadaBinding.nomeSerieTv.setText(temporada.getSerie());
             activityTemporadaBinding.numeroTemporadaEt.setText(String.valueOf(temporada.getNumero()));
             activityTemporadaBinding.anoTemporadaEt.setText(String.valueOf(temporada.getAno()));
             activityTemporadaBinding.qtdeEpisodiosEt.setText(String.valueOf(temporada.getEpisodios()));

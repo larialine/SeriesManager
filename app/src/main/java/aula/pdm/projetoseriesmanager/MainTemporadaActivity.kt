@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.TemporadasRvAdapter
 import aula.pdm.projetoseriesmanager.controller.TemporadaController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainTemporadaBinding
+import aula.pdm.projetoseriesmanager.model.serie.Serie
 import aula.pdm.projetoseriesmanager.model.temporada.Temporada
 import aula.pdm.projetoseriesmanager.model.temporada.onTemporadaClickListener
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +22,8 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
     companion object Extras{
         const val EXTRA_TEMPORADA = "EXTRA TEMPORADA"
         const val EXTRA_POSICAO_TEMPORADA = "EXTRA_POSICAO_TEMPORADA"
+        const val NUMERO_TEMPORADA = "NUMERO_TEMPORADA"
+        const val NOME_DA_SERIE = "NOME_DA_SERIE"
     }
 
     private val activityMainTemporadaActivity: ActivityMainTemporadaBinding by lazy {
@@ -29,10 +32,11 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
 
     private lateinit var temporadaActivityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var editarTemporadaActivityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cadastrarEpisodioActivityResultLauncher: ActivityResultLauncher<Intent>
 
     // Data source
     private val temporadasList: MutableList<Temporada> by lazy {
-        temporadaController.buscarTemporadas()
+        temporadaController.buscarTemporadas(activityMainTemporadaActivity.serieTv.text.toString())
     }
 
     //Controller
@@ -53,6 +57,13 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(activityMainTemporadaActivity.root)
+
+        supportActionBar?.title = "Temporadas"
+
+        intent.getStringExtra(MainActivity.NOME_SERIE)?.run {
+            activityMainTemporadaActivity.serieTv.text = this
+        }
+
 
         // Associando Adapter e LayoutManager ao RecycleView
         activityMainTemporadaActivity.temporadasRv.adapter = temporadaAdapter
@@ -86,8 +97,23 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
             }
         }
 
+        cadastrarEpisodioActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+                resultado ->
+            if(resultado.resultCode == RESULT_OK){
+                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO_TEMPORADA, -1)
+                resultado.data?.getParcelableExtra<Temporada>(EXTRA_TEMPORADA)?.let {
+                    if(posicao != null && posicao != -1){
+                        val temporada = temporadaController.buscarTemporada(it.numero)
+                        temporada.numero = Integer.parseInt(NUMERO_TEMPORADA)
+                    }
+                }
+            }
+        }
+
         activityMainTemporadaActivity.adicionarTemporadaFab.setOnClickListener{
-            temporadaActivityResultLauncher.launch(Intent(this, TemporadaActivity::class.java))
+            val cadastroTemporadaActivityIntent = Intent(this, TemporadaActivity::class.java)
+            cadastroTemporadaActivityIntent.putExtra(NOME_DA_SERIE, activityMainTemporadaActivity.serieTv.text)
+            temporadaActivityResultLauncher.launch(cadastroTemporadaActivityIntent)
         }
 
     }
@@ -95,6 +121,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val posicao = temporadaAdapter.posicaoTemporada
         val temporada = temporadasList[posicao]
+        val nomeSerie = temporada.serie
 
         return when (item.itemId) {
             R.id.editarMi -> {
@@ -103,6 +130,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 val editarTemporadaIntent = Intent(this, TemporadaActivity::class.java)
                 editarTemporadaIntent.putExtra(EXTRA_TEMPORADA, temporada)
                 editarTemporadaIntent.putExtra(EXTRA_POSICAO_TEMPORADA, posicao)
+                editarTemporadaIntent.putExtra(NOME_DA_SERIE, nomeSerie)
                 editarTemporadaActivityResultLauncher.launch(editarTemporadaIntent)
                 true
             }
@@ -130,7 +158,8 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
                 val exibirTelaEpisodio = Intent(this, MainEpisodioActivity::class.java)
                 exibirTelaEpisodio.putExtra(EXTRA_TEMPORADA, temporada)
                 exibirTelaEpisodio.putExtra(EXTRA_POSICAO_TEMPORADA, posicao)
-                startActivity(exibirTelaEpisodio)
+                exibirTelaEpisodio.putExtra(NUMERO_TEMPORADA, temporada.numero.toString())
+                cadastrarEpisodioActivityResultLauncher.launch(exibirTelaEpisodio)
                 true
             }
             else -> {
@@ -146,18 +175,5 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         startActivity(consultarTemporadaIntent)
     }
 
-    /*
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
-        R.id.atualizarMi -> {
-            temporadaAdapter.notifyDataSetChanged()
-            true
-        }
-        else -> false
-    }
-    */
 }
+

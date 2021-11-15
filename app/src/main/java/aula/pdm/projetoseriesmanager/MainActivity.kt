@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
     companion object Extras{
         const val EXTRA_SERIE = "EXTRA SERIE"
         const val EXTRA_POSICAO_SERIE = "EXTRA_POSICAO_SERIE"
+        const val NOME_SERIE = "NOME_SERIE"
     }
 
     private val activityMainBinding: ActivityMainBinding by lazy {
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
 
     private lateinit var serieActivityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var editarSerieActivityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cadastrarTemporadaActivityResultLauncher: ActivityResultLauncher<Intent>
 
     // Data source
     private val seriesList: MutableList<Serie> by lazy {
@@ -55,6 +57,8 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         super.onCreate(savedInstanceState)
         setContentView(activityMainBinding.root)
 
+        supportActionBar?.title = "Séries"
+
         //Inicializando lista de Séries
         inicializarSeriesList()
 
@@ -78,7 +82,7 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
 
         editarSerieActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 resultado ->
-            if (resultado.resultCode == AppCompatActivity.RESULT_OK){
+            if (resultado.resultCode == RESULT_OK){
                 val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO_SERIE, -1)
                 resultado.data?.getParcelableExtra<Serie>(EXTRA_SERIE)?.apply {
                     if(posicao != null && posicao != -1){
@@ -89,6 +93,20 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
                 }
             }
         }
+
+        cadastrarTemporadaActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            resultado ->
+            if(resultado.resultCode == RESULT_OK){
+                val posicao = resultado.data?.getIntExtra(EXTRA_POSICAO_SERIE, -1)
+                resultado.data?.getParcelableExtra<Serie>(NOME_SERIE)?.let {
+                    if(posicao != null && posicao != -1){
+                        val serie = serieController.buscarSerie(it.nome)
+                        serie.nome = NOME_SERIE
+                    }
+                }
+            }
+        }
+
 
         activityMainBinding.adicionarSerieFab.setOnClickListener{
             serieActivityResultLauncher.launch(Intent(this, SerieActivity::class.java))
@@ -147,7 +165,8 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
                 val exibirTelaTemporada = Intent(this, MainTemporadaActivity::class.java)
                 exibirTelaTemporada.putExtra(EXTRA_SERIE, serie)
                 exibirTelaTemporada.putExtra(EXTRA_POSICAO_SERIE, posicao)
-                startActivity(exibirTelaTemporada)
+                exibirTelaTemporada.putExtra(NOME_SERIE, serie.nome)
+                cadastrarTemporadaActivityResultLauncher.launch(exibirTelaTemporada)
                 true
             }
             else -> {
@@ -164,16 +183,4 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         startActivity(consultarSerieIntent)
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
-        R.id.atualizarMi -> {
-            seriesAdapter.notifyDataSetChanged()
-            true
-        }
-        else -> false
-    }*/
 }
