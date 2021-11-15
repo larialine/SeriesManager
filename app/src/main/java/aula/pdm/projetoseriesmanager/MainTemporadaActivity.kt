@@ -34,6 +34,7 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
     private lateinit var editarTemporadaActivityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var cadastrarEpisodioActivityResultLauncher: ActivityResultLauncher<Intent>
 
+
     // Data source
     private val temporadasList: MutableList<Temporada> by lazy {
         temporadaController.buscarTemporadas(activityMainTemporadaActivity.serieTv.text.toString())

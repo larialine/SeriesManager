@@ -10,7 +10,7 @@ class EpisodioController(mainEpisodioActivity: MainEpisodioActivity) {
 
     fun inserirEpisodio(episodio: Episodio) = episodioDAO.criarEpisodio(episodio)
     fun buscarEpisodio(numero: Int) = episodioDAO.recuperarEpisodio(numero)
-    fun buscarEpisodios() = episodioDAO.recuperarEpisodios()
+    fun buscarEpisodios(numeroTemporada: Int) = episodioDAO.recuperarEpisodios(numeroTemporada)
     fun alterarEpisodio(episodio: Episodio) = episodioDAO.atualizarEpisodio(episodio)
     fun apagarEpisodio(numero: Int) = episodioDAO.removerEpisodio(numero)
 }

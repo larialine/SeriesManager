@@ -21,6 +21,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
     companion object Extras{
         const val EXTRA_EPISODIO = "EXTRA EPISODIO"
         const val EXTRA_POSICAO_EPISODIO = "EXTRA_POSICAO_EPISODIO"
+        const val NUMERO_TEMPORADA = "NUMERO_TEMPORADA"
     }
 
     private val activityMainEpisodioActivity: ActivityMainEpisodioBinding by lazy {
@@ -32,7 +33,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
 
     // Data source
     private val episodiosList: MutableList<Episodio> by lazy {
-        episodioController.buscarEpisodios()
+        episodioController.buscarEpisodios(Integer.parseInt(activityMainEpisodioActivity.temporadaTv.text.toString()))
     }
 
     //Controller
@@ -95,7 +96,9 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         }
 
         activityMainEpisodioActivity.adicionarEpisodioFab.setOnClickListener{
-            episodioActivityResultLauncher.launch(Intent(this, EpisodioActivity::class.java))
+            val cadastroEpisodioActivityIntent = Intent (this, EpisodioActivity::class.java)
+            cadastroEpisodioActivityIntent.putExtra(NUMERO_TEMPORADA, activityMainEpisodioActivity.temporadaTv.text)
+            episodioActivityResultLauncher.launch(cadastroEpisodioActivityIntent)
         }
 
     }
@@ -103,6 +106,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val posicao = episodiosAdapter.posicaoEpisodio
         val episodio = episodiosList[posicao]
+        val numeroTemporada = episodio.temporada
 
         return when (item.itemId) {
             R.id.editarMi -> {
@@ -111,6 +115,7 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
                 val editarEpisodioIntent = Intent(this, EpisodioActivity::class.java)
                 editarEpisodioIntent.putExtra(EXTRA_EPISODIO, episodio)
                 editarEpisodioIntent.putExtra(EXTRA_POSICAO_EPISODIO, posicao)
+                editarEpisodioIntent.putExtra(NUMERO_TEMPORADA, numeroTemporada)
                 editarEpisodioActivityResultLauncher.launch(editarEpisodioIntent)
                 true
             }

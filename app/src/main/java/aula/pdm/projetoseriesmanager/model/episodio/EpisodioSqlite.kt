@@ -20,7 +20,7 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
         private val COLUNA_NOME = "nome"
         private val COLUNA_DURACAO = "duracao"
         private val COLUNA_ASSISTIDO = "assistido"
-        private val COLUNA_TEMPORADA = "serie"
+        private val COLUNA_TEMPORADA = "temporada"
 
         private val CRIAR_TABELA_EPISODIO_STMT = "CREATE TABLE IF NOT EXISTS ${TABELA_EPISODIO} (" +
                 "${COLUNA_NUMERO} INTEGER NOT NULL PRIMARY KEY," +
@@ -77,10 +77,10 @@ class EpisodioSqlite(context: Context): EpisodioDAO {
         }
     }
 
-    override fun recuperarEpisodios(): MutableList<Episodio> {
+    override fun recuperarEpisodios(numeroTemporada: Int): MutableList<Episodio> {
         val episodiosList = mutableListOf<Episodio>()
 
-        val episodiosCursor = episodiosBd.rawQuery("SELECT * FROM ${TABELA_EPISODIO};", null)
+        val episodiosCursor = episodiosBd.rawQuery("SELECT * FROM ${TABELA_EPISODIO} WHERE ${COLUNA_TEMPORADA} = ?;", arrayOf(numeroTemporada.toString()))
 
         while(episodiosCursor.moveToNext()){
             with(episodiosCursor){

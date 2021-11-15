@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         supportActionBar?.title = "Séries"
 
         //Inicializando lista de Séries
-        inicializarSeriesList()
+        //inicializarSeriesList()
 
         // Associando Adapter e LayoutManager ao RecycleView
         activityMainBinding.seriesRv.adapter = seriesAdapter

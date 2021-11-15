@@ -21,6 +21,8 @@ public class EpisodioActivity extends AppCompatActivity {
         activityEpisodioBinding = ActivityEpisodioBinding.inflate(getLayoutInflater());
         setContentView(activityEpisodioBinding.getRoot());
 
+        activityEpisodioBinding.numeroTemporadaTv.setText(getIntent().getStringExtra(MainEpisodioActivity.NUMERO_TEMPORADA));
+
         activityEpisodioBinding.salvarBt.setOnClickListener(
                 (View view) -> {
                     episodio = new Episodio(
@@ -60,6 +62,7 @@ public class EpisodioActivity extends AppCompatActivity {
             }else{
                 activityEpisodioBinding.flagAssistidoCb.setSelected(false);
             }
+            activityEpisodioBinding.flagAssistidoCb.setEnabled(false);
             //activityEpisodioBinding.flagAssistidoCb.setText(String.valueOf(episodio.getAssistido()));
             if(posicao == -1){
                 for(int i=0; i<activityEpisodioBinding.getRoot().getChildCount(); i++){
