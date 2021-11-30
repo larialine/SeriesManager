@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.SeriesRvAdapter
+import aula.pdm.projetoseriesmanager.autenticacao.AutenticacaoFirebase
 import aula.pdm.projetoseriesmanager.controller.SerieController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainBinding
 import aula.pdm.projetoseriesmanager.model.serie.Serie
@@ -181,6 +182,27 @@ class MainActivity : AppCompatActivity(), onSerieClickListener {
         val consultarSerieIntent = Intent(this, SerieActivity::class.java)
         consultarSerieIntent.putExtra(EXTRA_SERIE, serie)
         startActivity(consultarSerieIntent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+        R.id.sairMi -> {
+            AutenticacaoFirebase.firebaseAuth.signOut()
+            finish()
+            true
+        }
+        else -> false
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(AutenticacaoFirebase.firebaseAuth.currentUser == null){
+            finish()
+        }
     }
 
 }

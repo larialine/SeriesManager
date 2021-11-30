@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.TemporadasRvAdapter
+import aula.pdm.projetoseriesmanager.autenticacao.AutenticacaoFirebase
 import aula.pdm.projetoseriesmanager.controller.TemporadaController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainTemporadaBinding
 import aula.pdm.projetoseriesmanager.model.serie.Serie
@@ -174,6 +175,27 @@ class MainTemporadaActivity: AppCompatActivity(), onTemporadaClickListener {
         val consultarTemporadaIntent = Intent(this, TemporadaActivity::class.java)
         consultarTemporadaIntent.putExtra(EXTRA_TEMPORADA, temporada)
         startActivity(consultarTemporadaIntent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+        R.id.sairMi -> {
+            AutenticacaoFirebase.firebaseAuth.signOut()
+            finish()
+            true
+        }
+        else -> false
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(AutenticacaoFirebase.firebaseAuth.currentUser == null){
+            finish()
+        }
     }
 
 }

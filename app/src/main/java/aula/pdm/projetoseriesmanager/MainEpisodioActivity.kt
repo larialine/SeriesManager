@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import aula.pdm.projetoseriesmanager.adapter.EpisodiosRvAdapter
+import aula.pdm.projetoseriesmanager.autenticacao.AutenticacaoFirebase
 import aula.pdm.projetoseriesmanager.controller.EpisodioController
 import aula.pdm.projetoseriesmanager.databinding.ActivityMainEpisodioBinding
 import aula.pdm.projetoseriesmanager.model.episodio.Episodio
@@ -151,17 +152,24 @@ class MainEpisodioActivity: AppCompatActivity(), onEpisodioClickListener {
         startActivity(consultarEpisodioIntent)
     }
 
-    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+        return true;
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
-        R.id.atualizarMi -> {
-            episodiosAdapter.notifyDataSetChanged()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+        R.id.sairMi -> {
+            AutenticacaoFirebase.firebaseAuth.signOut()
+            finish()
             true
         }
         else -> false
-    }*/
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(AutenticacaoFirebase.firebaseAuth.currentUser == null){
+            finish()
+        }
+    }
 }
