@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -47,4 +48,16 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Bill of Materials básica do Firebase
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+
+    // Biblioteca Realtime Database do Firebase
+    implementation 'com.google.firebase:firebase-database-ktx'
+
+    // Bibliotecas de autenticação do Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Bibliotecas de autenticação com conta Google
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 }
